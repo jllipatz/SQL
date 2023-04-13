@@ -1,17 +1,17 @@
 # NOT SUPPORTED:
 #  not standard tables names
-#  /* ... */
 tables <- function(query) {
   WORDS <- c("FROM","SELECT","FROM","WHERE","GROUP","HAVING","ORDER","LIMIT")
 
 # Clean and split query string --------------------------------------------
 
   s <- query |>
-    stringr::str_replace_all("'(''|[^'])*'","_STRING_") |>
-    stringr::str_replace_all("--[^\\n]*\\n"," ") |>
-    stringr::str_replace_all("([(),])"," \\1 ") |>
-    stringr::str_replace_all("[ \\n]+"," ") |>
-    stringr::str_split(' ')
+    str_replace_all("/\\*.*?\\*/"," ") |>
+    str_replace_all("'(''|[^'])*'","_STRING_") |>
+    str_replace_all("--[^\\n]*\\n"," ") |>
+    str_replace_all("([(),])"," \\1 ") |>
+    str_replace_all("[ \\n]+"," ") |>
+    str_split(' ')
   v <- s[[1]]
   v <- v[v!='']
 
@@ -52,9 +52,9 @@ tables <- function(query) {
 
 SQL <- function(query,path) {
   on.exit(dbDisconnect(con,shutdown=TRUE))
-  con <- dbConnect(duckdb::duckdb())
+  con <- dbConnect(duckdb())
 
-  Map(\(x) duckdb_register(con,x,get(x)), tables(query))
+  Map(\(x) duckdb_register(con,x,get(x,mode="list")), tables(query))
 
   if (missing(path))
       dbGetQuery(con,query)
