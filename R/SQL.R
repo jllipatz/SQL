@@ -1,14 +1,14 @@
 # NOT SUPPORTED:
 #  not standard tables names
 tables <- function(query) {
-  WORDS <- c("FROM","SELECT","FROM","WHERE","GROUP","HAVING","ORDER","LIMIT")
+  WORDS <- c("SELECT","FROM","WHERE","GROUP","HAVING","ORDER","LIMIT")
 
 # Clean and split query string --------------------------------------------
 
   s <- query |>
-    str_replace_all("/\\*.*?\\*/"," ") |>
+    str_replace_all("/\\*.*?\\*/"," ") |>         # Multi line comments
+    str_replace_all("--[^\\n]*\\n"," ") |>        # EOL comments
     str_replace_all("'(''|[^'])*'","_STRING_") |>
-    str_replace_all("--[^\\n]*\\n"," ") |>
     str_replace_all("([(),])"," \\1 ") |>
     str_replace_all("[ \\n]+"," ") |>
     str_split(' ')
