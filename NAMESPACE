@@ -1,5 +1,6 @@
 export("SQL")
 
-import("DBI")
-import("duckdb")
-import("arrow")
+import(DBI)
+import(arrow)
+importFrom(stringr,str_replace_all,str_split)
+importFrom(duckdb,duckdb,duckdb_register)
