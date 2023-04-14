@@ -30,7 +30,7 @@ SQL("
 
 \dontrun{
 # Mixing data frames and parquet files, then writing to parquet
-dep <- rio::import('V:/PALETTES/SQL/data/dep2014.parquet')
+dep <- rio::import('V:/PALETTES/IGoR/data/dep2014.dbf')
 
 SQL(
   "SELECT a.*,b.REGION
