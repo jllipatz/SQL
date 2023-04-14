@@ -17,7 +17,7 @@ A character string containing SQL statements undertandable by Duckdb.
 A path to a parquet file to be created.
 }}
 \value{
-If 'path' is not given a value, returns the result of the query as a data frame, else returns NULL.
+If 'path' is not given a value, returns the result of the query as a data frame, else returns an invisible NULL.
 }
 \examples{
 SQL("SELECT * FROM mtcars LIMIT 1")
