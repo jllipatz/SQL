@@ -1,7 +1,10 @@
-# NOT SUPPORTED:
-#  not standard tables names
+#
+# Get a list of possible table names from a SQL query string
+#
+# NB: not standard tables names (inside quotes) are not supported
+#
 tables <- function(query) {
-  WORDS <- c("SELECT","FROM","WHERE","GROUP","HAVING","ORDER","LIMIT")
+  WORDS <- c("SELECT","FROM","WHERE","GROUP","HAVING","ORDER","LIMIT",";")
 
 # Clean and split query string --------------------------------------------
 
@@ -9,7 +12,7 @@ tables <- function(query) {
     str_replace_all("/\\*.*?\\*/"," ") |>         # Multi line comments
     str_replace_all("--[^\\n]*\\n"," ") |>        # EOL comments
     str_replace_all("'(''|[^'])*'","_STRING_") |>
-    str_replace_all("([(),])"," \\1 ") |>
+    str_replace_all("([(),;])"," \\1 ") |>
     str_replace_all("[ \\n]+"," ") |>
     str_split(' ')
   v <- s[[1]]
@@ -31,8 +34,9 @@ tables <- function(query) {
   l <- f()
 
 # Find table names --------------------------------------------------------
-# Just after a FROM or
-# within a FROM group, just after a JOIN or a ','
+# within a FROM group
+#  just after a FROM or just after a JOIN or a ','
+# and before something indicating the end of the FROM group
 
   r <- character(0); n <- 0
   g <- function (theList) {
