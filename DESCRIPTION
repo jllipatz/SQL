@@ -1,10 +1,10 @@
 Package: SQL
 Type: Package
-Title: Executes SQL Statements
+Title: Executes 'SQL' Statements
 Version: 0.1.0
-Author: Jean-Luc Lipatz [aut, cre]
-Maintainer: Jean-Luc Lipatz <jllipatz@protonmail.com>
-Description: Runs SQL statements on in-memory data frames within  a temporary in-memory duckdb data base.
+Authors@R: c(
+    person("Jean-Luc", "Lipatz", email = "jllipatz@protonmail.com", role = c("aut", "cre", "cph")))
+Description: Runs 'SQL' statements on in-memory data frames within a temporary in-memory 'duckdb' data base.
 License: GPL (>= 2)
 Encoding: UTF-8
 ByteCompile: yes
