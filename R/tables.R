@@ -3,8 +3,13 @@
 #
 # NB: not standard tables names (inside quotes) are not supported
 #
+# 0.1.1: Added support for PIVOT and UNPIVOT (duckdb>=0.8.0)
+
 tables <- function(query) {
-  WORDS <- c("SELECT","FROM","WHERE","GROUP","HAVING","ORDER","LIMIT",";")
+  WORDS <- c("SELECT","FROM","WHERE",
+             "GROUP","HAVING","ORDER","LIMIT",
+             "PIVOT","UNPIVOT",
+             ";")
 
   # Clean and split query string --------------------------------------------
 
@@ -46,7 +51,7 @@ tables <- function(query) {
       e <- theList[[i]]
       if (length(e)>1) g(e)
       else if (e %in% WORDS) b <- e
-      else if (p=="FROM") r[n<<-n+1]<<- e
+      else if (p %in% c("FROM","PIVOT","UNPIVOT")) r[n<<-n+1]<<- e
       else if ((b=="FROM")&&(p %in% c("JOIN",","))) r[n<<-n+1]<<- e
       p <- if (length(e)==1) e else ''
     } }
